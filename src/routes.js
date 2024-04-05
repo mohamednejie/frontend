@@ -18,11 +18,17 @@ const Updatereunion = React.lazy(()=> import('./views/forms/Reunion/Updatereunio
 const Ajouterreunion = React.lazy(() =>import('./views/forms/Reunion/Addreunion'))
 const Ajouterressource = React.lazy(() =>import('./views/forms/ressource/Ajouterressource'))
 const Updateressource = React.lazy(()=> import('./views/forms/ressource/Updateressource'))
+const Login = React.lazy(()=> import('./components/header/AppHeaderDropdown'))
+const Logout = React.lazy(()=> import('./components/header/AppHeaderDropdown'))
+const Register = React.lazy(()=> import('./components/header/AppHeaderDropdown'))
+const Profil=React.lazy(()=>import ('./views/pages/profil/Profil'))
+const UpdateProfil=React.lazy(()=>import ('./views/pages/profil/Updateprofil'))
+const ConsulterEvent = React.lazy(() => import('./views/forms/event/ConsulterEvent'))
 
 // Icons
 const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'))
 const Flags = React.lazy(() => import('./views/icons/flags/Flags'))
-const Brands = React.lazy(() => import('./views/icons/brands/Brands'))
+const Participatevent = React.lazy(() => import('./views/icons/participation/Participatevent'))
 
 // Notifications
 const Alerts = React.lazy(() => import('./views/notifications/alerts/Alerts'))
@@ -49,7 +55,7 @@ const routes = [
   { path: '/icons', exact: true, name: 'Icons', element: CoreUIIcons },
   { path: '/icons/coreui-icons', name: 'CoreUI Icons', element: CoreUIIcons },
   { path: '/icons/flags', name: 'Flags', element: Flags },
-  { path: '/icons/brands', name: 'Brands', element: Brands },
+  { path: '/icons/participation', name: 'Participatevent', element: Participatevent },
   { path: '/notifications', name: 'Notifications', element: Alerts, exact: true },
   { path: '/notifications/alerts', name: 'Alerts', element: Alerts },
   { path: '/notifications/badges', name: 'Badges', element: Badges },
@@ -59,6 +65,15 @@ const routes = [
   {path: '/forms/Updateformation/:id', name: 'Updateformation', element: Updateformation},
   {path: '/forms/Ajouterressource', name: 'Ajouterressource', element: Ajouterressource},
   {path: '/forms/Updateressource/:id', name: 'Updateressource', element: Updateressource},
+  {path: '/login', name: 'Login', element: Login},
+  {path: '/logout', name: 'Logout', element: Logout},
+
+  {path: '/register', name: 'Register', element: Register},
+  {path: '/profile/:id', name:'profil',element:Profil},
+  {path: '/updateprofile/:id', name:'updateprofil',element:UpdateProfil},
+ 
+  { path: '/consulterevent/:id', name: 'ConsulterEvent', element: ConsulterEvent },
+
 
 ]
 

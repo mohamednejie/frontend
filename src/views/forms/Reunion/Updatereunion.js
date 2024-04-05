@@ -25,13 +25,14 @@ export default function Reunion() {
     description: '',
     date_debut: '',
     date_fin: '',
+    lieu:'',
   });
   const [initialEvent, setInitialEvent] = useState({});
 
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/getonereunion/${id}`);
+        const response = await axios.get(`http://localhost:8080/api/getonereunion/${id}`);
         setInitialEvent(response.data);
         setFormData(response.data);
       } catch (error) {
@@ -59,7 +60,7 @@ export default function Reunion() {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/updatereunion/${id}`, formData);
+      await axios.put(`http://localhost:8080/api/updatereunion/${id}`, formData);
       toast.success('Réunion mise à jour avec succès');
     } catch (error) {
       console.error('Erreur lors de la mise à jour de la reunion :', error);
@@ -114,6 +115,16 @@ export default function Reunion() {
                     type="date"
                     name="date_fin"
                     value={formData.date_fin}
+                    onChange={handleChange}
+                  />
+                </CInputGroup>
+                <CInputGroup className="mb-3">
+                  <CFormInput
+                    placeholder="lieu"
+                    aria-label="lieu"
+                    type="text"
+                    name="lieu"
+                    value={formData.lieu}
                     onChange={handleChange}
                   />
                 </CInputGroup>

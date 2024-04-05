@@ -15,17 +15,13 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilLockLocked, cilUser } from '@coreui/icons';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [error, setError] = useState('');
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigateTo = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -43,22 +39,25 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ email, password }),
       });
       if (response.ok) {
-        // Connexion réussie, afficher le message de succès
-        setSuccessMessage('Login successful!');
-        // Effacer le message d'erreur s'il existe
-        setError('');
+        const userData = await response.json();
+        localStorage.setItem('utilisateur',JSON.stringify(userData));
+        console.log(userData)  
+        if (userData.roles.includes('ROLE_ADMIN')) {
+          navigateTo(`/${userData.id}`);
+
+        } else {
+          setErrorMessage('Veuillez vérifier votre donnes.');
+        }
       } else {
-        // Gérer l'échec de la connexion
-        const data = await response.json(); // Récupérer les données d'erreur du serveur
-        setError(data.message); // Définir l'erreur dans l'état
-        // Effacer le message de succès s'il existe
-        setSuccessMessage('');
+        const data = await response.json();
+        console.error('Erreur de connexion:', data.message); // Ajouter cette ligne pour afficher l'erreur dans la console
+        setErrorMessage(data.message);
       }
     } catch (error) {
-      console.error('Erreur lors de la connexion:', error);
+      console.error('Erreur lors de la connexion:', error); // Ajouter cette ligne pour afficher l'erreur dans la console
     }
   };
 
@@ -73,18 +72,7 @@ const Login = () => {
                   <CForm onSubmit={handleSubmit}>
                     <h1>Login</h1>
                     <p className="text-body-secondary">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="text"
-                        placeholder="Username"
-                        autoComplete="username"
-                        value={username}
-                        onChange={handleUsernameChange}
-                      />
-                    </CInputGroup>
+                    
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
@@ -116,8 +104,7 @@ const Login = () => {
                         </CButton>
                       </CCol>
                     </CRow>
-                    {error && !successMessage && <p className="text-danger mt-2">{error}</p>} {/* Afficher l'erreur si elle existe et aucun message de succès */}
-                    {successMessage && !error && <p className="text-success mt-2">{successMessage}</p>} {/* Afficher le message de succès si il existe et aucun message d'erreur */}
+                    {errorMessage && <p className="text-danger mt-2">{errorMessage}</p>}
                   </CForm>
                 </CCardBody>
               </CCard>
@@ -126,8 +113,8 @@ const Login = () => {
                   <div>
                     <h2>Sign up</h2>
                     <p>
-                    To access all the features of our platform, please sign up
-                     by filling out the form 
+                      To access all the features of our platform, please sign up
+                      by filling out the form 
                     </p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" activetabIndex={-1}>

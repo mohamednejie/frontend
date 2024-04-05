@@ -30,7 +30,7 @@ export default function Updateressource() {
   useEffect(() => {
     const fetchressource = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/getoneressource/${id}`);
+        const response = await axios.get(`http://localhost:8080/api/getoneressource/${id}`);
         setInitialressource(response.data);
         setFormData(response.data);
       } catch (error) {
@@ -70,7 +70,7 @@ export default function Updateressource() {
       formDataToSend.append('file', formData.file);
       
       await axios.put(
-        `http://localhost:5000/api/updateressource/${id}`,
+        `http://localhost:8080/api/updateressource/${id}`,
         formDataToSend
       );
       toast.success(' Ressource pédagogique mise à jour avec succès'); // Affichage de la notification de succès

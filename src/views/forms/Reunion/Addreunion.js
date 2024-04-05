@@ -32,7 +32,7 @@ export default function NewReunionForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/creatreunion', reunion);
+      const response = await axios.post('http://localhost:8080/api/creatreunion', reunion);
       console.log(response.data); // Log the response if needed
       toast.success('Réunion ajoutée avec succès') // Display success notification
 
@@ -41,7 +41,8 @@ export default function NewReunionForm() {
         titre: '',
         description: '',
         date_debut: '',
-        date_fin: '',      
+        date_fin: '',
+        lieu:'',      
       });
     } catch (error) {
       console.error('Error:', error);
@@ -102,7 +103,15 @@ export default function NewReunionForm() {
                     onChange={handleChange}
                   />
                 </CInputGroup>
-                
+                <CInputGroup className="mb-3">
+                  <CFormInput
+                    placeholder="lieu"
+                    type="text"
+                    name="lieu"
+                    value={reunion.lieu}
+                    onChange={handleChange}
+                  />
+                </CInputGroup>
                 <CButton type="submit" color="primary" style={{ margin: '12px' }}>
                   Créer Réunion
                 </CButton>

@@ -34,7 +34,7 @@ export default function Ajouterressource() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('http://localhost:5000/api/createressource', formData)
+      const response = await axios.post('http://localhost:8080/api/createressource', formData)
       console.log(response.data) // Log the response if needed
       toast.success('ressource pédagogique  ajouté avec succès') // Display success notification
       // Clear form after successful submission if needed

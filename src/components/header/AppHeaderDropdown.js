@@ -3,7 +3,6 @@ import {
   CAvatar,
   CBadge,
   CDropdown,
-  CDropdownDivider,
   CDropdownHeader,
   CDropdownItem,
   CDropdownMenu,
@@ -17,32 +16,54 @@ import {
 import CIcon from '@coreui/icons-react';
 import { faUser } from '@fortawesome/free-solid-svg-icons'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
+import { Link } from 'react-router-dom'; // Importez Link depuis 'react-router-dom'
+import axios from 'axios';
+
+const Logout = () => {
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:8080/logout');
+
+      localStorage.removeItem('utilisateur');
+
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion :', error);
+    }
+  };
+
+  return (
+    <CDropdownItem onClick={handleLogout}>
+      <CIcon icon={cilLockLocked} className="me-2" />
+      logout
+    </CDropdownItem>
+  );
+};
+
 const AppHeaderDropdown = () => {
+  const utilisateur = JSON.parse(localStorage.getItem('utilisateur'));
+  const id = utilisateur ? utilisateur.id : '';
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
-        <FontAwesomeIcon icon={faUser}  size="md" style={{"marginTop":"10px"}} /> 
+        <FontAwesomeIcon icon={faUser} size="md" style={{"marginTop": "10px"}} /> 
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">Account</CDropdownHeader>
-      
-        <CDropdownItem href="#">
+        <CDropdownItem>
           <CIcon icon={cilUser} className="me-2" />
-          Profile
+          <Link to={`/profile/${id}`}>Profile</Link> 
         </CDropdownItem>
-        
-        <CDropdownItem href="#">
+        <CDropdownItem>
+          <CIcon icon={cilUser} className="me-2" />
+          <Link to={`/login`}>login</Link> 
+        </CDropdownItem>
+        <CDropdownItem>
           <CIcon icon={cilCreditCard} className="me-2" />
-          Payments
-          <CBadge color="secondary" className="ms-2">
-            42
-          </CBadge>
+          <Link to="/register">Create Account</Link>
         </CDropdownItem>
-        
-        <CDropdownItem href="#">
-          <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
-        </CDropdownItem>
+        <Logout /> 
       </CDropdownMenu>
     </CDropdown>
   );

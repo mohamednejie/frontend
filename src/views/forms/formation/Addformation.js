@@ -32,7 +32,7 @@ export default function NewFormationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/creatformation', formation);
+      const response = await axios.post('http://localhost:8080/api/creatformation', formation);
       console.log(response.data); // Log the response if needed
       toast.success('Formation ajoutée avec succès'); // Display success notification
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPenSquare,faLink } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css'; 
@@ -16,13 +16,13 @@ import {
   CRow,
 } from '@coreui/react';
 
-export default function UpdateEvent() {
+export default function Event() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/getevent');
+        const response = await axios.get('http://localhost:8080/api/getevent');
         setEvents(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des événements :', error);
@@ -33,7 +33,7 @@ export default function UpdateEvent() {
 
   const handleDeleteEvent = async (eventId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/deleteevent/${eventId}`);
+      await axios.delete(`http://localhost:8080/api/deleteevent/${eventId}`);
       setEvents(events.filter((event) => event._id !== eventId));
       toast.success('Événement supprimé avec succès'); 
     } catch (error) {
@@ -63,8 +63,8 @@ export default function UpdateEvent() {
                         <th>Nom</th>
                         <th>Date</th>
                         <th>Lieu</th>
-                        <th>Description</th>
                         <th>Durée</th>
+                        <th>file</th>
                         <th>Actions</th> 
                       </tr>
                     </thead>
@@ -74,22 +74,33 @@ export default function UpdateEvent() {
                           <td>{event.name}</td>
                           <td>{event.date}</td>
                           <td>{event.lieu}</td>
-                          <td>{event.description}</td>
                           <td>{event.duree}</td>
+                          <td>{event.file}</td>
                           <td>
                             <CButton onClick={() => handleDeleteEvent(event._id)}>
                               <FontAwesomeIcon 
                                 icon={faTrash} 
-                                style={{ marginRight: '10px' }} 
+                                 
                                 title="Supprimer" 
                               />
                             </CButton>
                             <Link to={`/forms/UpdateEventForm/${event._id}`}>
                               <FontAwesomeIcon
                                 icon={faPenSquare}
+                                style={{ marginRight: '5px' }} 
+
                                 title="Modifier"
                               />
                             </Link>
+                            <Link to={`/consulterevent/${event._id}`}>
+                            <FontAwesomeIcon icon={faLink} 
+                                title="consulter"
+                                style={{ marginLeft: '5px' }} 
+
+                              />
+                            </Link>
+                          
+
                           </td>
                         </tr>
                       ))}

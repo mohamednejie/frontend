@@ -15,7 +15,7 @@ export default function Reunion() {
   useEffect(() => {
     const fetchReunions = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/getallreunion');
+        const response = await axios.get('http://localhost:8080/api/getallreunion');
         setReunions(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des réunions :', error);
@@ -26,7 +26,7 @@ export default function Reunion() {
 
   const handleDeleteReunion = async (reunionId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/deletereunion/${reunionId}`);
+      await axios.delete(`http://localhost:8080/api/deletereunion/${reunionId}`);
       setReunions(reunions.filter((reunion) => reunion._id !== reunionId));
       toast.success('Réunion supprimée avec succès');
     } catch (error) {
@@ -68,6 +68,7 @@ export default function Reunion() {
                         <th>Date début</th>
                         <th>Date fin</th>
                         <th>Description</th>
+                        <th>lieu</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -78,6 +79,8 @@ export default function Reunion() {
                           <td>{reunion.date_debut}</td>
                           <td>{reunion.date_fin}</td>
                           <td>{reunion.description}</td>
+                          <td>{reunion.lieu}</td>
+
                           <td>
                             <CButton onClick={() => handleDeleteReunion(reunion._id)}>
                               <FontAwesomeIcon

@@ -22,7 +22,7 @@ export default function ressource() {
   useEffect(() => {
     const fetchressource = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/getressource');
+        const response = await axios.get('http://localhost:8080/api/getressource');
         setressource(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des ressources pédagogique  :', error);
@@ -33,7 +33,7 @@ export default function ressource() {
 
   const handleDeleteressource = async (ressourceId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/deleteressource/${ressourceId}`);
+      await axios.delete(`http://localhost:8080/api/deleteressource/${ressourceId}`);
       setressource(ressource.filter((ressource) => ressource._id !== ressourceId));
       toast.success('ressource pédagogique  supprimé avec succès'); 
     } catch (error) {

@@ -60,18 +60,18 @@ const _nav = [
 
   {
     component: CNavItem,
-    name: 'reunions',
+    name: 'User',
     to: '/User',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
-    name: 'formation',
+    name: 'participation',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'ajouter formation',
+        name: 'participation aux evenements',
         to: '/icons/coreui-icons',
         badge: {
           color: 'success',
@@ -86,8 +86,9 @@ const _nav = [
       {
         component: CNavItem,
         name: 'modifier formation',
-        to: '/icons/brands',
+        to: '/icons/participation',
       },
+     
     ],
   },
   {

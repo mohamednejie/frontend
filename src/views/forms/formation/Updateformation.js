@@ -31,7 +31,7 @@ export default function Formation() {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/getoneformation/${id}`); // Correction de l'URL
+        const response = await axios.get(`http://localhost:8080/api/getoneformation/${id}`); // Correction de l'URL
         setInitialEvent(response.data);
         setFormData(response.data);
       } catch (error) {
@@ -56,7 +56,7 @@ export default function Formation() {
     }
     try {
       await axios.put(
-        `http://localhost:5000/api/updateformation/${id}`,
+        `http://localhost:8080/api/updateformation/${id}`,
         formData
       );
       toast.success('Formation mise à jour avec succès'); // Affichage de la notification de succès

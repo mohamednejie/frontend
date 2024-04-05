@@ -16,7 +16,7 @@ export default function Formations() {
   useEffect(() => {
     const fetchFormations = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/getallformation');
+        const response = await axios.get('http://localhost:8080/api/getallformation');
         setFormations(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des formations :', error);
@@ -27,7 +27,7 @@ export default function Formations() {
 
   const handleDeleteFormation = async (formationId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/deleteformation/${formationId}`);
+      await axios.delete(`http://localhost:8080/api/deleteformation/${formationId}`);
       setFormations(formations.filter((formation) => formation._id !== formationId));
       toast.success('Formation supprimée avec succès');
     } catch (error) {
